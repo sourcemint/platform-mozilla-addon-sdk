@@ -1,0 +1,11 @@
+{
+  "name": "sourcemint-platform-mozilla-addon-sdk-examples-01-portableloadertests",
+  "fullName": "sourcemint-platform-mozilla-addon-sdk-examples-01-PortableLoaderTests",
+  "description": "sourcemint-platform-mozilla-addon-sdk-examples-01-PortableLoaderTests",
+  "author": "",
+  "license": "MIT",
+  "version": "0.1",
+  "dependencies": [
+      "sourcemint-platform-mozilla-addon-sdk"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+    "name": "sourcemint-platform-mozilla-addon-sdk",
+    "version": "0.1.0",
+    "dependencies": {
+        "q": "0.x",
+        "sourcemint-loader-js": "0.x"
+    }
+}
