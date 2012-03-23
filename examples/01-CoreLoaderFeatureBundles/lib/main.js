@@ -25,10 +25,10 @@ exports.main = function()
 		for (i in arguments) {
 			args.push(arguments[i]);
 		}
-		if (typeof args[0] === "object" && typeof args[0].stack !== "undefined") {
-			args.push(args[0].stack);
+		if (typeof args[0] === "object" && typeof args[0].fileName !== "undefined" && typeof args[0].lineNumber !== "undefined") {
+			args.push("in file '" + args[0].fileName + "' at line '" + args[0].lineNumber + "'");
 		}
-		console.error.apply(null, ["[01-PortableLoaderTests]"].concat(args));
+		console.error.apply(console, ["[01-CoreLoaderFeatureBundles]"].concat(args));    
 	}
 
 	var status = {};
@@ -82,14 +82,14 @@ exports.main = function()
 //					    logStatus();
 					    
 					}, function() {
-                        
+
 					    status[name] = "failed";
 
                         result.reject();
                         
 //                        logStatus();
 					});
-				} catch(e) {
+				} catch(e) {                      
 					result.reject(e);
 				}
 				
@@ -107,7 +107,7 @@ exports.main = function()
                                     LOADER.resolveURI(uri).then(function(uri) {
                                         loaded(FILE.read(uri, "r"));
                                     }, function(e) {
-                                        console.log(e);
+                                        logError(e);
                                     });
 						        }
 						    });
@@ -126,7 +126,7 @@ exports.main = function()
 		}
 		catch(e)
 		{
-			console.log(e);
+		    logError(e);
 		}
 	
 		return result.promise;
@@ -139,6 +139,8 @@ exports.main = function()
 	}, function(e)
 	{
 		logError(e);
+
+		deferred.reject(e);
 	});
 	
 	return deferred.promise;

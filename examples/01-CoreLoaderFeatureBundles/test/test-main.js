@@ -9,6 +9,7 @@ exports.test_main = function(test)
 		test.done();
 	}, function(e)
 	{
-		console.log(e);
+	    test.fail(e);      
+        test.done();
 	});
 };
