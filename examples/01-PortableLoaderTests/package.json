@@ -1,11 +1,12 @@
 {
-  "name": "sourcemint-platform-mozilla-addon-sdk-examples-01-portableloadertests",
-  "fullName": "sourcemint-platform-mozilla-addon-sdk-examples-01-PortableLoaderTests",
-  "description": "sourcemint-platform-mozilla-addon-sdk-examples-01-PortableLoaderTests",
-  "author": "",
-  "license": "MIT",
-  "version": "0.1",
-  "dependencies": [
-      "sourcemint-platform-mozilla-addon-sdk"
-  ]
+    "name": "sourcemint-platform-mozilla-addon-sdk-examples-01-portableloadertests", 
+    "license": "MIT", 
+    "author": "", 
+    "version": "0.1", 
+    "dependencies": [
+        "sourcemint-platform-mozilla-addon-sdk"
+    ], 
+    "fullName": "sourcemint-platform-mozilla-addon-sdk-examples-01-PortableLoaderTests", 
+    "id": "jid1-tQlyMzgnEL9gRA", 
+    "description": "sourcemint-platform-mozilla-addon-sdk-examples-01-PortableLoaderTests"
 }
