@@ -4,7 +4,7 @@ Sourcemint Mozilla Add-on SDK Platform
 *Status: ALPHA*
 
 Everything needed to use the [Sourcemint](http://sourcemint.com/) Ecosystem
-(including the [Sourcemint JavaScript Loader](https://github.com/sourcemint/loader-js)) on 
+(including the [Sourcemint JavaScript Loader](https://github.com/sourcemint/loader-js)) with the 
 [Mozilla Add-on SDK](https://addons.mozilla.org/en-US/developers/docs/sdk/latest/).
 
   * Copyright: 2012 [Christoph Dorn](http://www.christophdorn.com/)
@@ -28,7 +28,7 @@ Activate add-on SDK:
 
     cd ./support/mozilla-addon-sdk
     source bin/activate
-    cd ../../
+    cd ../..
 
 Examples
 --------
