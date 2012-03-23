@@ -1,6 +1,7 @@
 
 var LOADER = require("sourcemint-platform-mozilla-addon-sdk/loader"),
-	Q = require("sourcemint-platform-mozilla-addon-sdk/q");
+	Q = require("sourcemint-platform-mozilla-addon-sdk/q"),
+	FILE = require("api-utils/file");
 
 
 exports.main = function()
@@ -48,7 +49,7 @@ exports.main = function()
         "05-CrossPackageDependencies",
         "06-JsonModule",
         "07-TextModule",
-//        "08-ResourceURI",
+        "08-ResourceURI",
         "09-LoadBundle",
         "10-Sandbox",
 //        "11-CrossDomain",
@@ -96,7 +97,19 @@ exports.main = function()
 				onInitModule: function(moduleInterface, moduleObj)
 				{
 					moduleObj.require.API = {
-						Q: Q
+						Q: Q,
+						JQUERY: function(ready)
+						{
+						    ready({
+						        get: function(uri, loaded) {
+                                    LOADER.resolveURI(uri).then(function(uri) {
+                                        loaded(FILE.read(uri, "r"));
+                                    }, function(e) {
+                                        console.log(e);
+                                    });
+						        }
+						    });
+						}
 					};
 					moduleInterface.log = function()
 					{
