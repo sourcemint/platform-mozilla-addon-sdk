@@ -5,7 +5,7 @@ exports.test_main = function(test)
 
 	require("main").main().then(function()
 	{
-		console.log("DONE!");
+		test.pass("OK!");		
 		test.done();
 	}, function(e)
 	{

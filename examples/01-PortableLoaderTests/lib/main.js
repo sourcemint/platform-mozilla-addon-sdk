@@ -51,12 +51,12 @@ exports.main = function()
 //        "08-ResourceURI",
         "09-LoadBundle",
         "10-Sandbox",
-        "11-CrossDomain",
+//        "11-CrossDomain",
         "12-Environment",
         "13-AssignExports",
-        "NamedBundle",
-        "Avoid-NestedBundles",
-        "Avoid-SplitBundles"	              
+        "NamedBundle"
+//        "Avoid-NestedBundles",
+//        "Avoid-SplitBundles"	              
 	].map(function(name)
 	{
 		var result = Q.defer();
@@ -117,8 +117,7 @@ exports.main = function()
 		return result.promise;
 	})), function()
 	{
-	
-		console.log(LOADER.getReport());
+		console.log(JSON.stringify(LOADER.getReport()));
 
 		deferred.resolve();
 		
