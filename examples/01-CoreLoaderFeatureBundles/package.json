@@ -1,0 +1,12 @@
+{
+    "name": "sourcemint-platform-mozilla-addon-sdk-examples-01-coreloaderfeaturebundles", 
+    "license": "MIT", 
+    "author": "", 
+    "version": "0.1", 
+    "dependencies": [
+        "sourcemint-platform-mozilla-addon-sdk"
+    ], 
+    "fullName": "sourcemint-platform-mozilla-addon-sdk-examples-01-CoreLoaderFeatureBundles", 
+    "id": "jid1-tQlyMzgnEL9gRA", 
+    "description": "sourcemint-platform-mozilla-addon-sdk-examples-01-CoreLoaderFeatureBundles"
+}
