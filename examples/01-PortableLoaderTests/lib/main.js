@@ -55,9 +55,9 @@ exports.main = function()
 //        "11-CrossDomain",
         "12-Environment",
         "13-AssignExports",
-        "NamedBundle"
-//        "Avoid-NestedBundles",
-//        "Avoid-SplitBundles"	              
+        "NamedBundle",
+        "Avoid-NestedBundles",
+        "Avoid-SplitBundles"	              
 	].map(function(name)
 	{
 		var result = Q.defer();
@@ -71,7 +71,9 @@ exports.main = function()
 	            status[name] = "loaded";
 			    
 				try {
-					Q.when(sandbox.main(), function() {
+					Q.when(sandbox.main({
+					    debug: true
+					}), function() {
 
 					    status[name] = "success";
 					    
