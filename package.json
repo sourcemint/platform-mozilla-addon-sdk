@@ -3,8 +3,11 @@
     "version": "0.1.0",
     "dependencies": {
         "q": "0.x",
-        "sourcemint-loader-js": "0.x",
-        "sourcemint-platform-nodejs": "0.x"
+        "sourcemint-loader-js": "0.x"
+    },
+    "devDependencies": {
+        "sourcemint-platform-nodejs": "0.x",
+        "wrench": "1.x"
     },
     "scripts": {
         "test": "node tests/examples"

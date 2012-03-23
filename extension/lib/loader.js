@@ -23,7 +23,7 @@ exports.sandbox = function(sandboxIdentifier, loadedCallback, sandboxOptions)
 	// Set our own loader for the sandbox.
 	options.load = function(uri, loadedCallback)
     {
-		resolveURI(uri).then(function(uri)
+		(options.resolveURI || resolveURI)(uri).then(function(uri)
 		{
 			Q.when(loadBundleCode(uri), function(code)
 			{
@@ -68,14 +68,6 @@ var resolveURI = exports.resolveURI = function resolveURI(uri)
 	var deferred = Q.defer(),
 		m;
 
-	// The github case.
-	// TODO: Match various vendor APIS.
-	if ((m = uri.match(/^(github.com\/sourcemint\/loader-js\/0)\/-raw\/(.*)$/)))
-	{
-		// TODO: Get `/pinf/workspaces` from `ENV.PINF_WORKSPACES` implemented at github.com/pinf/core-js/lib/env.js
-		deferred.resolve("/pinf/workspaces/" + m[1] + "/" + m[2]);
-	}
-	else
 	if ((m = uri.match(/^http(s)?:\/\/([^\/]*)(.*)$/)))
 	{
 		deferred.resolve(uri);
@@ -94,7 +86,7 @@ function loadBundleCode(uri)
 {
 	var deferred = Q.defer(),
 		m;
-	
+
 	try
 	{
 		// Check for local absolute file path.
@@ -104,6 +96,13 @@ function loadBundleCode(uri)
 			return FILE.read(uri, "r");
 		}
 		else
+        // Check for resource url.
+        if ((m = uri.match(/^resource:\/\//)))
+        {
+            // TODO: Pass this implementation as `options.readFile` to github.com/sourcemint/downloader-js/lib/bundle.js#loadBundleCode
+            return FILE.read(require("api-utils/url").toFilename(uri), "r");
+        }
+        else
 		// Check for HTTP(S) URI.
 		if ((m = uri.match(/^http(s)?:\/\/([^\/]*)(.*)$/)))
 		{

@@ -2,6 +2,7 @@
 var Q = require("q"),
 	PATH = require("path"),
 	FS = require("fs"),
+	WRENCH = require("wrench"),
 	EXEC = require("child_process").exec,
 	ERROR = require("sourcemint-platform-nodejs/lib/util/error");
 
@@ -9,9 +10,11 @@ exports.main = function()
 {
     const PACKAGE_BASE_PATH = FS.realpathSync(PATH.dirname(__dirname));
     const EXAMPLES_BASE_PATH = PACKAGE_BASE_PATH + "/examples";
-    
+
     var done = Q.ref();
-    
+
+    WRENCH.copyDirSyncRecursive(PATH.dirname(require.resolve("sourcemint-loader-js/examples/01-HelloWorld")), __dirname + "/../examples/01-CoreLoaderFeatureBundles/data/examples");
+
     FS.readdirSync(EXAMPLES_BASE_PATH).forEach(function(filename)
     {
         var basePath = EXAMPLES_BASE_PATH + "/" + filename;

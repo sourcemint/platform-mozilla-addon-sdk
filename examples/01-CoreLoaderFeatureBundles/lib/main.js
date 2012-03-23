@@ -17,7 +17,7 @@ exports.main = function()
 		}
 		console.log.apply(null, ["[" + moduleObj.require.sandbox.id + " : " + moduleObj.id + "]"].concat(args));
 	}
-	
+
 	function logError()
 	{
 		var args = [],
@@ -32,13 +32,35 @@ exports.main = function()
 	}
 
 	var status = {};
-	
+
 	function logStatus()
 	{
 	    for (var name in status)
 	    {
 	        console.log("  " + name + ": " + status[name]);
 	    }
+	}
+
+	function resolveUri(uri) {
+        var deferred = Q.defer(),
+            m;
+
+        if ((m = uri.match(/^(github.com\/sourcemint\/loader-js\/0)\/-raw\/(.*)$/)))
+        {
+            deferred.resolve(require("self").data.url(m[2]));
+        }
+        else
+        if ((m = uri.match(/^http(s)?:\/\/([^\/]*)(.*)$/)))
+        {
+            deferred.resolve(uri);
+        }
+        else
+        {
+            throw new Error("Unable to resolve URI: " + uri);
+            deferred.reject();
+        }
+
+        return deferred.promise;
 	}
 
 	Q.when(Q.all([
@@ -104,8 +126,8 @@ exports.main = function()
 						{
 						    ready({
 						        get: function(uri, loaded) {
-                                    LOADER.resolveURI(uri).then(function(uri) {
-                                        loaded(FILE.read(uri, "r"));
+						            resolveUri(uri).then(function(uri) {
+                                        loaded(FILE.read(require("api-utils/url").toFilename(uri), "r"));
                                     }, function(e) {
                                         logError(e);
                                     });
@@ -121,7 +143,8 @@ exports.main = function()
 					{
 						logToOutput(moduleObj, argsIn);
 					};
-				}
+				},
+				resolveURI: resolveUri
 			});
 		}
 		catch(e)

@@ -2,7 +2,8 @@
     "name": "sourcemint-platform-mozilla-addon-sdk-examples-01-coreloaderfeaturebundles", 
     "license": "MIT", 
     "author": "", 
-    "version": "0.1", 
+    "version": "0.1",
+    "unpack": true,
     "dependencies": [
         "sourcemint-platform-mozilla-addon-sdk"
     ], 
