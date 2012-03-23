@@ -63,7 +63,7 @@ exports.sandbox = function(sandboxIdentifier, loadedCallback, sandboxOptions)
 
 
 // TODO: Relocate this to github.com/pinf/core-js/lib/resolver.js and return PINF URI info object.
-function resolveURI(uri)
+var resolveURI = exports.resolveURI = function resolveURI(uri)
 {
 	var deferred = Q.defer(),
 		m;
