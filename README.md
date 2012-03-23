@@ -23,6 +23,7 @@ Install
     cd sourcemint-platform-mozilla-addon-sdk
     git submodule update --init --recursive
     npm install
+    npm test
 
 Activate add-on SDK:
 
