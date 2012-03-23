@@ -40,7 +40,7 @@ exports.sandbox = function(sandboxIdentifier, loadedCallback, sandboxOptions)
 			    catch(e)
 			    {
 			    	// TODO: Bubble this up to the loader's error handler.
-		            console.error(e.stack);
+		            console.error("Error '" + e + "' in '" + e.fileName + "' on line '" + e.lineNumber + "'!");
 			    }
 			}, function(err)
 			{
