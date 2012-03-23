@@ -19,7 +19,7 @@ exports.sandbox = function(sandboxIdentifier, loadedCallback, sandboxOptions)
 	{
 		options[key] = sandboxOptions[key];
 	}
-	
+
 	// Set our own loader for the sandbox.
 	options.load = function(uri, loadedCallback)
     {
