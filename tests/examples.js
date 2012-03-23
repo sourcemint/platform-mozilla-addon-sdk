@@ -15,7 +15,9 @@ exports.main = function()
 
     WRENCH.copyDirSyncRecursive(PATH.dirname(require.resolve("sourcemint-loader-js/examples/01-HelloWorld")), __dirname + "/../examples/01-CoreLoaderFeatureBundles/data/examples");
 
-    FS.readdirSync(EXAMPLES_BASE_PATH).forEach(function(filename)
+    FS.readdirSync(EXAMPLES_BASE_PATH).concat(FS.readdirSync(EXAMPLES_BASE_PATH + "/02-LoaderFeatures").map(function(filename) {
+        return "02-LoaderFeatures/" + filename;
+    })).forEach(function(filename)
     {
         var basePath = EXAMPLES_BASE_PATH + "/" + filename;
 

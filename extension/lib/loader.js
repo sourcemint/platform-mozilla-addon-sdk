@@ -6,6 +6,8 @@ var
 	FILE = require("api-utils/file"),
 	XHR = require("api-utils/xhr"),
 	Q = require("./q");
+	
+const sdkPackagingMeta = JSON.stringify(require("@packaging"));
 
 
 exports.getReport = LOADER.require.getReport;
@@ -32,6 +34,7 @@ exports.sandbox = function(sandboxIdentifier, loadedCallback, sandboxOptions)
 			    	var sandbox = new Cu.Sandbox(Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal));
 
 			    	sandbox.require = LOADER.require;
+                    sandbox.console = console;
 
 			    	Cu.evalInSandbox(code, sandbox, "1.8", uri, 0);
 
@@ -55,6 +58,49 @@ exports.sandbox = function(sandboxIdentifier, loadedCallback, sandboxOptions)
 		});
 	}
 
+	options.onInitPackage = function(pkg, sandbox, options)
+    {
+        var origRequire = pkg.require;
+        pkg.require = function(moduleIdentifier)
+        {
+            var canonicalId = (pkg.id + "/" + moduleIdentifier).replace(/\/+/, "/");
+
+            // HACK
+            // TODO: Use a better flag than '__' to indicate that module should be loaded here!
+            if (pkg.id === "__mozilla.org/addon-sdk/addon-kit/0__")
+            {
+                var packaging = JSON.parse(sdkPackagingMeta);
+                
+                packaging.manifest["sourcemint-platform-mozilla-addon-sdk/lib/loader.js"].requirements["addon-kit/" + moduleIdentifier.replace(/\.js$/, "")] = {
+                    path: "addon-kit/lib/" + moduleIdentifier
+                };
+
+                return {
+                    exports: SDKLoader(module, {}, packaging).require("addon-kit/" + moduleIdentifier.replace(/\.js$/, ""))
+                };
+            }
+            else
+            if (pkg.id === "__mozilla.org/addon-sdk/api-utils/0__")
+            {
+                var packaging = JSON.parse(sdkPackagingMeta);
+                
+                packaging.manifest["sourcemint-platform-mozilla-addon-sdk/lib/loader.js"].requirements["api-utils/" + moduleIdentifier.replace(/\.js$/, "")] = {
+                    path: "api-utils/lib/" + moduleIdentifier
+                };
+
+                return {
+                    exports: SDKLoader(module, {}, packaging).require("api-utils/" + moduleIdentifier.replace(/\.js$/, ""))
+                };
+            }
+            else
+            {
+                return origRequire(moduleIdentifier);
+            }
+        };
+
+        pkg.require.id = origRequire.id;
+    }
+
 	LOADER.require.sandbox(sandboxIdentifier, function(sandbox)
 	{
 		loadedCallback(sandbox);
@@ -68,7 +114,7 @@ var resolveURI = exports.resolveURI = function resolveURI(uri)
 	var deferred = Q.defer(),
 		m;
 
-	if ((m = uri.match(/^http(s)?:\/\/([^\/]*)(.*)$/)))
+	if ((m = uri.match(/^http(s)?:\/\/([^\/]*)(.*)$/)) || (m = uri.match(/^resource:\/\//)))
 	{
 		deferred.resolve(uri);
 	}
@@ -135,4 +181,22 @@ function loadBundleCode(uri)
 	}
 	return deferred.promise;
 }
+
+
+var SDKLoader = function(module, globals, packaging) {
+  var { Loader } = require("@loader");
+  var options = packaging;
+  options.globals = globals;
+  let loader = Loader.new(options);
+  return Object.create(loader, {
+    require: { value: Loader.require.bind(loader, module.path) },
+    sandbox: { value: function sandbox(id) {
+      let path = options.manifest[module.path].requirements[id].path;
+      return loader.sandboxes[path].sandbox;
+    }},
+    unload: { value: function unload(reason, callback) {
+      loader.unload(reason, callback);
+    }}
+  })
+};
 

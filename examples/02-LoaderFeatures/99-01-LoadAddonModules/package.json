@@ -1,0 +1,13 @@
+{
+    "name": "sourcemint-platform-mozilla-addon-sdk-examples-02-loaderfeatures-99-01-loadaddonmodules", 
+    "license": "MIT", 
+    "author": "", 
+    "version": "0.1",
+    "unpack": true,
+    "dependencies": [
+        "sourcemint-platform-mozilla-addon-sdk"
+    ], 
+    "fullName": "sourcemint-platform-mozilla-addon-sdk-examples-02-LoaderFeatures-99-01-LoadAddonModules", 
+    "id": "jid1-tQlyMzgnEL9gRD", 
+    "description": "sourcemint-platform-mozilla-addon-sdk-examples-02-LoaderFeatures-99-01-LoadAddonModules"
+}
