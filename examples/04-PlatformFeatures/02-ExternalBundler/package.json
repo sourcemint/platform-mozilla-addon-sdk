@@ -1,0 +1,13 @@
+{
+    "name": "sourcemint-platform-mozilla-addon-sdk-examples-04-platformfeatures-02-externalbundler", 
+    "license": "MIT", 
+    "author": "", 
+    "version": "0.1",
+    "unpack": true,
+    "dependencies": [
+        "sourcemint-platform-mozilla-addon-sdk"
+    ], 
+    "fullName": "sourcemint-platform-mozilla-addon-sdk-examples-04-PlatformFeatures-02-ExternalBundler", 
+    "id": "jid1-tQlyMzgnEL9gRB", 
+    "description": "sourcemint-platform-mozilla-addon-sdk-examples-04-PlatformFeatures-02-ExternalBundler"
+}
