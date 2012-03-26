@@ -4,7 +4,7 @@ var
 	LOADER = require("./loader-core"),
 	{ Cc, Ci, CC, Cu } = require("chrome"),
 	FILE = require("api-utils/file"),
-	XHR = require("api-utils/xhr"),
+	REQUEST = require("addon-kit/request").Request,
 	Q = require("./q");
 	
 const sdkPackagingMeta = JSON.stringify(require("@packaging"));
@@ -153,22 +153,18 @@ function loadBundleCode(uri)
 		if ((m = uri.match(/^http(s)?:\/\/([^\/]*)(.*)$/)))
 		{
 			// TODO: Relocate to github.com/sourcemint/downloader-js/lib/fetcher.js
-			var request = new XHR.XMLHttpRequest();  
-			request.open("GET", uri, true);  
-			request.onreadystatechange = function (event)
-			{  
-			    if (request.readyState === 4)
-			    {
-					if (request.status !== 200)
-					{
-				    	// TODO: Bubble this up to the loader's error handler.
-						throw new Error("Did not get status 200 for URL: " + uri);
-					}
-
-					deferred.resolve(request.responseText);
-			    }
-			};
-			request.send(null); 
+		    var r = REQUEST({
+                url: uri,
+                onComplete: function(response)
+                {
+                    if (response.status !== 200)
+                    {
+                        // TODO: Bubble this up to the loader's error handler.
+                        throw new Error("Did not get status 200 for URL: " + uri);
+                    }
+                    deferred.resolve(response.text);
+                }
+            }).get();
 		}
 		else
 		{
