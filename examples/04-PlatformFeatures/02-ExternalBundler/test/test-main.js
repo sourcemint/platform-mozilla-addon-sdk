@@ -23,6 +23,8 @@ exports.test_main = function(test)
 	});
 };
 
+// @ref http://rawkes.com/blog/2011/12/05/running-node.js-from-within-a-firefox-xul-extension
+// TODO: Always ensure shutdown with: Services.obs.addObserver(ObserverHandler, "quit-application-granted", false);
 function startBundlerProcess(callback)
 {
     console.log("Starting bundler server.");
