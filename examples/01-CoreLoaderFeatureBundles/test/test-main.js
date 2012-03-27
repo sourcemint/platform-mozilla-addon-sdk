@@ -1,7 +1,7 @@
 
 exports.test_main = function(test)
 {
-	test.waitUntilDone(1000 * 10);
+	test.waitUntilDone(1000 * 6);
 
 	require("main").main().then(function()
 	{

@@ -34,8 +34,12 @@ Activate add-on SDK:
 Examples
 --------
 
-    cd examples/01-PortableLoaderTests
-    cfx test
+Run all examples with:
+
+    npm test
+
+Look for how individual examples can be run in the test output.
+
 
 In your own Add-on
 ------------------

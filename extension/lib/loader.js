@@ -42,19 +42,16 @@ exports.sandbox = function(sandboxIdentifier, loadedCallback, sandboxOptions)
 			    }
 			    catch(e)
 			    {
-			    	// TODO: Bubble this up to the loader's error handler.
-		            console.error("Error '" + e + "' in '" + e.fileName + "' on line '" + e.lineNumber + "'!");
+		            (options.onError || console.error)("Error '" + e + "' in '" + e.fileName + "' on line '" + e.lineNumber + "'!");
 			    }
 			}, function(err)
 			{
-		    	// TODO: Bubble this up to the loader's error handler.
-				console.error(err);
+			    (options.onError || console.error)(err);
 			});
 
 		}, function(err)
 		{
-	    	// TODO: Bubble this up to the loader's error handler.
-			console.error(err);
+		    (options.onError || console.error)(err);
 		});
 	}
 
@@ -160,7 +157,8 @@ function loadBundleCode(uri)
                     if (response.status !== 200)
                     {
                         // TODO: Bubble this up to the loader's error handler.
-                        throw new Error("Did not get status 200 for URL: " + uri);
+                        deferred.reject(new Error("Did not get status 200 for URL: " + uri));
+                        return;
                     }
                     deferred.resolve(response.text);
                 }

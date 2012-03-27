@@ -15,9 +15,14 @@ exports.main = function()
 
     WRENCH.copyDirSyncRecursive(PATH.dirname(require.resolve("sourcemint-loader-js/examples/01-HelloWorld")), __dirname + "/../examples/01-CoreLoaderFeatureBundles/data/examples");
 
-    FS.readdirSync(EXAMPLES_BASE_PATH).concat(FS.readdirSync(EXAMPLES_BASE_PATH + "/02-LoaderFeatures").map(function(filename) {
-        return "02-LoaderFeatures/" + filename;
-    })).forEach(function(filename)
+    FS.readdirSync(EXAMPLES_BASE_PATH).
+        concat(FS.readdirSync(EXAMPLES_BASE_PATH + "/02-LoaderFeatures").map(function(filename) {
+            return "02-LoaderFeatures/" + filename;
+        })).
+        concat(FS.readdirSync(EXAMPLES_BASE_PATH + "/04-PlatformFeatures").map(function(filename) {
+            return "04-PlatformFeatures/" + filename;
+        })).
+    forEach(function(filename)
     {
         var basePath = EXAMPLES_BASE_PATH + "/" + filename;
 
@@ -26,6 +31,12 @@ exports.main = function()
             done = Q.when(done, function()
             {
                 var deferred = Q.defer();
+
+                console.log("");
+                console.log("##################");
+                console.log("##### Run Example: [cd " + basePath + " ; cfx test] #####");
+                console.log("##################");
+                console.log("");
 
                 EXEC(__dirname + "/../support/mozilla-addon-sdk/bin/cfx test", {
                     cwd: basePath

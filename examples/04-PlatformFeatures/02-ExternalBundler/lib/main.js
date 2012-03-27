@@ -136,6 +136,7 @@ exports.main = function()
                                         }).get();
                                     }, function(e) {
                                         logError(e);
+                                        result.reject();
                                     });
                                 }
                             });
@@ -150,12 +151,17 @@ exports.main = function()
                         logToOutput(moduleObj, argsIn);
                     };
                 },
-                resolveURI: resolveUri
+                resolveURI: resolveUri,
+                onError: function(e) {
+                    logError(e);
+                    result.reject();
+                }
             });
         }
         catch(e)
         {
             logError(e);
+            result.reject();
         }
     
         return result.promise;
