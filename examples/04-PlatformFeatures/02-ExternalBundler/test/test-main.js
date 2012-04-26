@@ -7,9 +7,9 @@ exports.test_main = function(test)
 {
 	test.waitUntilDone(1000 * 6);
 
-	startBundlerProcess(function(process)
-	{
-	    require("main").main().then(function()
+    startBundlerProcess(function(process)
+    {
+        require("main").main().then(function()
         {
             test.pass("OK!");
         }, function(e)
@@ -20,7 +20,7 @@ exports.test_main = function(test)
             process.kill();
             test.done();
         });
-	});
+    });
 };
 
 // @ref http://rawkes.com/blog/2011/12/05/running-node.js-from-within-a-firefox-xul-extension
